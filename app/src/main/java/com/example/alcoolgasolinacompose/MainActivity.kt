@@ -27,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.alcoolgasolinacompose.view.ListGasStationView
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +39,7 @@ class MainActivity : ComponentActivity() {
                 NavHost(navController = navController, startDestination = "welcome") {
                     composable("welcome") { GreetingView(navController) }
                     composable("priceCompare") { PriceCompareView(navController, savedInstanceState) }
+                    composable("listGasStations") { ListGasStationView() }
                 }
             }
         }
