@@ -30,8 +30,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.alcoolgasolinacompose.GasStation
+import com.example.alcoolgasolinacompose.R
 import com.example.alcoolgasolinacompose.deleteGasStationSharedFile
 import com.example.alcoolgasolinacompose.openNumberOfGasStationFile
 import com.example.alcoolgasolinacompose.readGasStationsListFromFile
@@ -45,7 +47,8 @@ fun ListGasStationView()
     val context = LocalContext.current;
 
     var showDeleteDialogConfirmation by remember { mutableStateOf(false) }
-    var deleteDialogText by remember { mutableStateOf("") }
+//    var deleteDialogText by remember { mutableStateOf("") }
+    var deleteDialogueId by remember { mutableStateOf(R.string.alert_posto_deletado) }
     val listOfGasStations = remember { mutableStateListOf<GasStation>() }
     var numberOfGasStation by remember { mutableStateOf(0) }
     numberOfGasStation = openNumberOfGasStationFile(context);
@@ -86,9 +89,9 @@ fun ListGasStationView()
                 Column (modifier.padding(5.dp)) {
                     Text(text = gasStation.name);
                     Spacer(Modifier.height(3.dp));
-                    Text(text = "Preço gasolina: ${gasStation.priceGasoline}");
+                    Text(stringResource(R.string.entry_preco_gasolina) + " " + gasStation.priceGasoline.toString());
                     Spacer(Modifier.height(3.dp));
-                    Text(text = "Preço Alcohol: ${gasStation.priceAlcohol}");
+                    Text(stringResource(R.string.entry_preco_alcool) + " " + gasStation.priceAlcohol.toString());
                     Spacer(Modifier.height(3.dp));
                     TextButton(
                         onClick = {
@@ -101,7 +104,7 @@ fun ListGasStationView()
                             context.startActivity(mapIntent)
                         }
                     ){
-                        Text(text = "Ver no mapa")
+                        Text(stringResource(R.string.posto_vernomapa))
                     }
                     Row {
                         TextButton(
@@ -110,7 +113,7 @@ fun ListGasStationView()
                                 showEditDialog = true;
                             }
                         ) {
-                            Text(text = "Editar")
+                            Text(stringResource(R.string.posto_edit))
                         }
                         TextButton(
                             onClick = {
@@ -122,14 +125,16 @@ fun ListGasStationView()
                                     if(elementIndex > -1) {
                                         listOfGasStations.removeAt(elementIndex)
                                     }
-                                    deleteDialogText = "Posto deletado com sucesso";
+//                                    deleteDialogText = "Posto deletado com sucesso";
+                                    deleteDialogueId = R.string.alert_posto_deletado
                                 }else{
-                                    deleteDialogText = "Ocorreu um erro, tente mais tarde";
+//                                    deleteDialogText = stringResource();
+                                    deleteDialogueId = R.string.alert_posto_erro
                                 }
                                 showDeleteDialogConfirmation = true;
                             }
                         ) {
-                            Text(text = "Deletar")
+                            Text(stringResource(R.string.posto_delete))
                         }
                     }
                 }
@@ -157,10 +162,10 @@ fun ListGasStationView()
     if(showDeleteDialogConfirmation) {
         AlertDialog(
             title = {
-                Text(text = "Deletar posto")
+                Text(stringResource(R.string.posto_delete_titulo))
             },
             text = {
-                Text(text = deleteDialogText)
+                Text(stringResource(deleteDialogueId))
             },
             onDismissRequest = {
 
@@ -171,7 +176,7 @@ fun ListGasStationView()
                         showDeleteDialogConfirmation = false
                     }
                 ) {
-                    Text("Confirm")
+                    Text(stringResource(R.string.alert_exit_ok))
                 }
             },
         )

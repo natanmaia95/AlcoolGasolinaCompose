@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">Alcool Gasolina Compose</string>
+
+    <string name="entry_preco_gasolina">Preço da Gasolina</string>
+    <string name="entry_preco_alcool">Preço do Álcool</string>
+    <string name="entry_nome_posto">Nome do posto</string>
+
+    <string name="switch_rendimento">Rendimento do álcool: </string>
+    <string name="calculo_melhorescolha">Melhor escolha: </string>
+    <string name="calculo_alcool">Álcool</string>
+    <string name="calculo_gasolina">Gasolina</string>
+    <string name="calculo_botao_calcular">Calcular o melhor combustível</string>
+    <string name="calculo_botao_listapostos">Ver lista de postos</string>
+    <string name="calculo_dialogue_salvarposto">Salvar Posto</string>
+
+    <string name="alert_localizacao_indisponivel">Não foi possível obter localização.</string>
+    <string name="alert_localizacao_negada">Permissão de localização negada.</string>
+    <string name="alert_posto_salvo">Posto salvo com sucesso.</string>
+    <string name="alert_exit_ok">Entendido</string>
+
+    <string name="alert_posto_deletado">Posto deletado com sucesso.</string>
+    <string name="alert_posto_erro">Ocorreu um erro, tente mais tarde.</string>
+
+    <string name="posto_vernomapa">Ver no mapa</string>
+    <string name="posto_edit">Editar</string>
+    <string name="posto_delete">Apagar</string>
+    <string name="posto_delete_titulo">Apagar Posto</string>
 </resources>

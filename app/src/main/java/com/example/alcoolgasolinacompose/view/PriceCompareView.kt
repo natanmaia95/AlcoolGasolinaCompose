@@ -47,7 +47,9 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.TextButton
+import androidx.compose.ui.res.stringResource
 import com.example.alcoolgasolinacompose.GasStation
+import com.example.alcoolgasolinacompose.R
 import com.example.alcoolgasolinacompose.openNumberOfGasStationFile
 import com.example.alcoolgasolinacompose.createJsonObjectFromGasStationClass
 import com.example.alcoolgasolinacompose.saveGasStationJsonObjectInFile
@@ -76,13 +78,14 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
     var gasStationName by remember { mutableStateOf("") }
     var deveEscolherGasolina by remember {
         mutableStateOf(false)
-
     }
     var use75 by remember {
         mutableStateOf(sharedPref.getBoolean(KEY_USE_75, false)) //false is default value
     }
+
     var showAlertDialog by remember { mutableStateOf(false) }
-    var alertDialogText by remember { mutableStateOf("") }
+//    var alertDialogText by remember { mutableStateOf("") }
+    var alertDialogStringId by remember { mutableStateOf(R.string.alert_localizacao_indisponivel) }
 
     numberGas = openNumberOfGasStationFile(context);
 
@@ -118,10 +121,12 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
                         saveGasStationJsonObjectInFile(numberGas, context, gasStationJson);
                         numberGas += 1;
                         saveGasStationNumber(numberGas, context);
-                        alertDialogText = "Posto salvo com sucesso";
+//                        alertDialogText = stringResource(R.string.alert_posto_salvo);
+                        alertDialogStringId = R.string.alert_posto_salvo
                         showAlertDialog = true;
                     } ?: run {
-                        alertDialogText = "Não foi possível obter localização";
+//                        alertDialogText = stringResource(R.string.alert_localizacao_indisponivel);
+                        alertDialogStringId = R.string.alert_localizacao_indisponivel
                         showAlertDialog = true;
                     }
 
@@ -129,7 +134,8 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
 
             }
         } else {
-            alertDialogText = "Permissão de localização negada";
+//            alertDialogText = stringResource(R.string.alert_localizacao_negada);
+            alertDialogStringId = R.string.alert_localizacao_negada
             showAlertDialog = true;
         }
     }
@@ -147,7 +153,7 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
 
             TextField(
                 value = precoGasolina,
-                label = { Text("Preço da Gasolina") },
+                label = { Text(stringResource(id = R.string.entry_preco_gasolina)) },
                 onValueChange = {precoGasolina = it},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
             )
@@ -157,7 +163,7 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
 
             TextField(
                 value = precoAlcool,
-                label = { Text("Preço do Álcool") },
+                label = { Text(stringResource(id = R.string.entry_preco_alcool)) },
                 onValueChange = {precoAlcool = it},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal)
             )
@@ -167,7 +173,7 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
 
             TextField(
                 value = gasStationName,
-                label = { Text("Nome do posto") },
+                label = { Text(stringResource(id = R.string.entry_nome_posto)) },
                 onValueChange = {gasStationName = it},
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
             )
@@ -177,7 +183,7 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text("Rendimento: " + if (use75) {"75%"} else {"70%"})
+                Text(stringResource(R.string.switch_rendimento) + " " + if (use75) {"75%"} else {"70%"})
                 Switch(
                     checked = use75,
                     onCheckedChange = {
@@ -193,22 +199,21 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
 
             Spacer(Modifier.height(16.dp))
 
-            Text(if (deveEscolherGasolina) {"MELHOR ESCOLHA: GASOLINA"} else {"MELHOR ESCOLHA: ALCOOL"})
+            Text(
+                stringResource(R.string.calculo_melhorescolha) + " " +
+                if (deveEscolherGasolina) {stringResource(R.string.calculo_gasolina)} else {stringResource(R.string.calculo_alcool)}
+            )
 
             Button(
-                onClick = {
-                    deveEscolherGasolina = calcDeveEscolherGasolina(precoGasolina.toFloat(), precoAlcool.toFloat(), use75)
-                }
+                onClick = { deveEscolherGasolina = calcDeveEscolherGasolina(precoGasolina.toFloat(), precoAlcool.toFloat(), use75) }
             ) {
-                Text("Calcular o melhor combustível")
+                Text(stringResource(R.string.calculo_botao_calcular))
             }
 
             Button(
-                onClick = {
-                    navController.navigate("listGasStations");
-                }
+                onClick = { navController.navigate("listGasStations"); }
             ) {
-                Text("Ver lista de postos")
+                Text(stringResource(R.string.calculo_botao_listapostos))
             }
         }
 
@@ -233,12 +238,8 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
 
     if(showAlertDialog) {
         AlertDialog(
-            title = {
-                Text(text = "Salvamento de posto")
-            },
-            text = {
-                Text(text = alertDialogText)
-            },
+            title = { Text(stringResource(R.string.calculo_dialogue_salvarposto)) },
+            text = { Text(stringResource(alertDialogStringId)) },
             onDismissRequest = {
 
             },
@@ -248,7 +249,7 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
                         showAlertDialog = false
                     }
                 ) {
-                    Text("Confirm")
+                    Text(stringResource(R.string.alert_exit_ok))
                 }
             },
         )

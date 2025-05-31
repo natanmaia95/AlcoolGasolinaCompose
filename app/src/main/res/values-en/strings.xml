@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Alcohol Gas Compose</string>
+
+    <string name="entry_preco_gasolina">Price of Gas</string>
+    <string name="entry_preco_alcool">Price of Alcohol</string>
+    <string name="entry_nome_posto">Gas Station name</string>
+
+    <string name="switch_rendimento">Alcohol efficiency to gas: </string>
+    <string name="calculo_melhorescolha">Best choice: </string>
+    <string name="calculo_alcool">Alcohol</string>
+    <string name="calculo_gasolina">Gasoline</string>
+    <string name="calculo_botao_calcular">Compute best fuel</string>
+    <string name="calculo_botao_listapostos">View gas station list</string>
+    <string name="calculo_dialogue_salvarposto">Save Gas Station</string>
+
+    <string name="alert_localizacao_indisponivel">Couldn\'t obtain location data.</string>
+    <string name="alert_localizacao_negada">Couldn\'t obtain location permissions.</string>
+    <string name="alert_posto_salvo">Gas station saved successfully.</string>
+    <string name="alert_exit_ok">OK</string>
+
+    <string name="alert_posto_deletado">Gas station deleted successfully.</string>
+    <string name="alert_posto_erro">An error occurred, try again later.</string>
+
+    <string name="posto_vernomapa">Open map</string>
+    <string name="posto_edit">Edit</string>
+    <string name="posto_delete">Delete</string>
+    <string name="posto_delete_titulo">Delete Gas Station</string>
+</resources>
