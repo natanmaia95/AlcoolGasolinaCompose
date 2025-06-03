@@ -229,7 +229,7 @@ fun PriceCompareView(navController: NavController, savedInstanceState: Bundle?) 
             },
             modifier = Modifier
                 .align(Alignment.BottomEnd)
-                .padding(16.dp),
+                .padding(16.dp, bottom = 48.dp),
             containerColor = Color(0xFF00BCD4)
         ) {
             Icon(Icons.Filled.Add, "Small floating action button to add gasStation.")

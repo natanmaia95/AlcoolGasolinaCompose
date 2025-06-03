@@ -36,10 +36,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             AlcoolGasolinaComposeTheme {
                 var navController : NavHostController = rememberNavController()
-                NavHost(navController = navController, startDestination = "welcome") {
+                NavHost(navController = navController, startDestination = "priceCompare") {
                     composable("welcome") { GreetingView(navController) }
                     composable("priceCompare") { PriceCompareView(navController, savedInstanceState) }
-                    composable("listGasStations") { ListGasStationView() }
+                    composable("listGasStations") { ListGasStationView(navController) }
                 }
             }
         }

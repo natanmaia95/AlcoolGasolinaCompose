@@ -6,6 +6,7 @@ import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -31,7 +32,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.alcoolgasolinacompose.GasStation
 import com.example.alcoolgasolinacompose.R
 import com.example.alcoolgasolinacompose.deleteGasStationSharedFile
@@ -41,7 +45,7 @@ import com.example.alcoolgasolinacompose.saveGasStationNumber
 
 
 @Composable
-fun ListGasStationView()
+fun ListGasStationView(navController: NavController)
 {
     val modifier: Modifier = Modifier;
     val context = LocalContext.current;
@@ -73,7 +77,7 @@ fun ListGasStationView()
     Column (
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0D1419))
+//            .background(Color(0xFF0D1419))
             .padding(start = 16.dp, end = 16.dp, top = 42.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -81,40 +85,45 @@ fun ListGasStationView()
             Card (
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-                    .border(1.dp, Color.Black)
-                    .clickable { },
-                shape = RoundedCornerShape(10.dp),
+                    .padding(8.dp),
+//                    .border(1.dp, Color.Black)
+//                    .clickable { },
+                shape = RoundedCornerShape(16.dp),
             ) {
-                Column (modifier.padding(5.dp)) {
-                    Text(text = gasStation.name);
-                    Spacer(Modifier.height(3.dp));
+                Column (modifier.padding(16.dp)) {
+                    Text(text = gasStation.name, fontWeight = FontWeight.Bold);
+                    Spacer(Modifier.height(4.dp));
                     Text(stringResource(R.string.entry_preco_gasolina) + " " + gasStation.priceGasoline.toString());
-                    Spacer(Modifier.height(3.dp));
+                    Spacer(Modifier.height(2.dp));
                     Text(stringResource(R.string.entry_preco_alcool) + " " + gasStation.priceAlcohol.toString());
-                    Spacer(Modifier.height(3.dp));
-                    TextButton(
-                        onClick = {
-                            val gmmIntentUri = Uri.parse(
-                                "geo:${gasStation.latidute},${gasStation.longitude}"
-                            )
-                            val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
-                                setPackage("com.google.android.apps.maps")
+                    Spacer(Modifier.height(2.dp));
+
+                    Row (
+                        modifier = modifier
+                            .fillMaxWidth()
+//                            .border(2.dp, Color.Black)
+                            .padding(0.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        TextButton(
+                            onClick = {
+                                val gmmIntentUri = Uri.parse(
+                                    "geo:${gasStation.latidute},${gasStation.longitude}"
+                                )
+                                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri).apply {
+                                    setPackage("com.google.android.apps.maps")
+                                }
+                                context.startActivity(mapIntent)
                             }
-                            context.startActivity(mapIntent)
-                        }
-                    ){
-                        Text(stringResource(R.string.posto_vernomapa))
-                    }
-                    Row {
+                        ){ Text(stringResource(R.string.posto_vernomapa)) }
+
                         TextButton(
                             onClick = {
                                 gasStationToDialog = gasStation
                                 showEditDialog = true;
                             }
-                        ) {
-                            Text(stringResource(R.string.posto_edit))
-                        }
+                        ) { Text(stringResource(R.string.posto_edit)) }
+
                         TextButton(
                             onClick = {
                                 val wasDeleteSuccesful = deleteGasStationSharedFile(gasStation.id, context);
@@ -133,9 +142,7 @@ fun ListGasStationView()
                                 }
                                 showDeleteDialogConfirmation = true;
                             }
-                        ) {
-                            Text(stringResource(R.string.posto_delete))
-                        }
+                        ) { Text(stringResource(R.string.posto_delete)) }
                     }
                 }
             }
